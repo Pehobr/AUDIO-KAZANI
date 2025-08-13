@@ -3,6 +3,7 @@
  * Template Name: Kázání
  *
  * Šablona pro stránku s audio kázáními načítanými z databáze WordPressu.
+ * Verze: 2.1 - Sjednocená výška tlačítek
  */
 
 get_header(); // Načte hlavičku šablony
@@ -24,11 +25,20 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
         Inspirace Božího slova
     </h1>
 
-    <div class="kazani-container w-full max-w-xl mx-auto my-8 space-y-4">
+    <!-- 
+        KONTEJNER PRO KÁZÁNÍ S RESPONZIVNÍ MŘÍŽKOU
+        - grid: Aktivuje CSS Grid layout.
+        - grid-cols-1: Výchozí zobrazení pro mobily (1 sloupec).
+        - md:grid-cols-3: Na tabletech a větších zařízeních (šířka >= 768px) se zobrazí 3 sloupce.
+        - lg:grid-cols-4: Na počítačích (šířka >= 1024px) se zobrazí 4 sloupce.
+        - gap-4: Mezera mezi jednotlivými tlačítky v mřížce.
+        - max-w-7xl: Zvětšena maximální šířka kontejneru pro lepší zobrazení více sloupců.
+    -->
+    <div class="kazani-container w-full max-w-7xl mx-auto my-8 p-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <?php
         // Zkontrolujeme, zda jsou data k dispozici v databázi
         if ( empty($csv_data) ) {
-            echo '<p class="text-center text-white bg-orange-600 p-4 rounded-lg">Data o kázáních nebyla nalezena. Prosím, načtěte je v administraci webu v sekci "Kázání".</p>';
+            echo '<p class="col-span-full text-center text-white bg-orange-600 p-4 rounded-lg">Data o kázáních nebyla nalezena. Prosím, načtěte je v administraci webu v sekci "Kázání".</p>';
         } else {
             // Převedeme CSV data na pole řádků
             $rows = str_getcsv( $csv_data, "\n" ); 
@@ -41,7 +51,6 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
 
             // Projdeme všechny řádky v novém, obráceném pořadí.
             foreach ( $rows as $row ) {
-                // Kontrola indexu pro přeskočení hlavičky již není potřeba.
                 $data = str_getcsv( $row, "," );
                 
                 $nazev_kazani = isset($data[0]) ? htmlspecialchars($data[0]) : 'Bez názvu';
@@ -51,13 +60,13 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
 
                 if (empty($url_tag)) continue; // Přeskočíme prázdné řádky
 
-                // OPRAVA: Přidán chybějící znak $ k proměnné
                 $final_mp3_url = $base_mp3_url . $url_tag . '.mp3';
                 ?>
+                <!-- Jednotlivá položka kázání -->
                 <div class="w-full bg-[#f1eeea] rounded-xl shadow-lg overflow-hidden">
-                    <button class="accordion-toggle w-full p-3 flex justify-between items-center bg-[#b7a99a] text-[#514332] font-normal rounded-xl hover:bg-[#9b8f84] focus:outline-none focus:ring-4 focus:ring-[#d3c7bb] ring-2 ring-white ring-inset">
+                    <!-- ZMĚNA ZDE: Přidána třída "h-20" pro sjednocení výšky tlačítek. -->
+                    <button class="accordion-toggle w-full h-20 p-3 flex justify-between items-center bg-[#b7a99a] text-[#514332] font-normal rounded-xl hover:bg-[#9b8f84] focus:outline-none focus:ring-4 focus:ring-[#d3c7bb] ring-2 ring-white ring-inset">
                         
-                        <!-- ZMĚNA ZDE: Přidány třídy "text-left" pro zarovnání vlevo a "leading-tight" pro menší mezery mezi řádky -->
                         <span class="text-left leading-tight"><?php echo $nazev_kazani; ?></span>
                         
                         <svg class="arrow-icon w-6 h-6 transform transition-transform duration-300 flex-shrink-0 ml-2" fill="none" stroke="#514332" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -90,3 +99,4 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
 
 <?php
 get_footer(); // Načte patičku šablony
+?>
