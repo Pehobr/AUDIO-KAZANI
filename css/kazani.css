@@ -1,0 +1,46 @@
+/* kazani.css */
+/* Tento soubor obsahuje styly specifické pro stránku kazani.php */
+
+/* Základní styly */
+body {
+    font-family: 'Inter', sans-serif; /* Výchozí font */
+}
+
+/* Styly pro rozbalovací obsah (accordion) */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.accordion-content.open {
+    max-height: 500px; /* Dostatečná výška pro obsah, lze upravit */
+    transition: max-height 0.5s ease-in;
+}
+
+/* --- OPRAVA FONTŮ --- */
+/* Použití speciálního fontu pro VŠECHNA tlačítka s touto třídou */
+.accordion-toggle {
+    font-family: 'DynaPuff', cursive;
+}
+
+/* Použití speciálního fontu pro VŠECHNY odstavce v rozbalovacím obsahu */
+.accordion-content p {
+    font-family: 'Playfair Display', serif;
+}
+/* --- KONEC OPRAVY --- */
+
+
+/* Styly pro vlastní audio přehrávač */
+.audio-player-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Zvětšení ikon přehrávače pro lepší ovladatelnost */
+.audio-player-button-icon {
+    width: 1.75rem; /* 28px */
+    height: 1.75rem; /* 28px */
+}
