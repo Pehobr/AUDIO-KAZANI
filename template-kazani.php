@@ -3,7 +3,7 @@
  * Template Name: Kázání
  *
  * Šablona pro stránku s audio kázáními, která se otevírají v modálním okně.
- * Verze: 3.0 - Implementace modálního okna
+ * Verze: 3.2 - Úprava responzivních velikostí nadpisu
  */
 
 get_header(); // Načte hlavičku šablony
@@ -20,8 +20,8 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
 
 <main id="primary" class="site-main">
     
-    <!-- Hlavní nadpis stránky -->
-    <h1 class="text-2xl text-white text-center my-8" style="font-family: 'Marck Script', cursive;">
+    <!-- Hlavní nadpis stránky s responzivní velikostí textu -->
+    <h1 class="text-2xl md:text-3xl lg:text-4xl text-white text-center my-8" style="font-family: 'Marck Script', cursive;">
         Inspirace Božího slova
     </h1>
 
