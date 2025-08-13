@@ -20,7 +20,7 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
 <main id="primary" class="site-main">
     
     <!-- Hlavní nadpis stránky -->
-    <h1 class="text-4xl text-white text-center my-8" style="font-family: 'Marck Script', cursive;">
+    <h1 class="text-2xl text-white text-center my-8" style="font-family: 'Marck Script', cursive;">
         Inspirace Božího slova
     </h1>
 
