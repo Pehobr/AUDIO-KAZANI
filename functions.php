@@ -28,8 +28,9 @@ add_action( 'wp_enqueue_scripts', 'chld_thm_cfg_parent_css', 10 );
 function enqueue_kazani_assets() {
     if ( is_page_template( 'template-kazani.php' ) ) {
         wp_enqueue_script( 'tailwind-css', 'https://cdn.tailwindcss.com', array(), null, false );
-        wp_enqueue_style( 'google-fonts-kazani', 'https://fonts.googleapis.com/css2?family=DynaPuff&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap', array(), null );
-        wp_enqueue_style( 'kazani-style', get_stylesheet_directory_uri() . '/css/kazani.css', array(), '1.1' );
+        // Načtení všech potřebných fontů: DynaPuff, Marck Script, Playfair Display
+        wp_enqueue_style( 'google-fonts-kazani', 'https://fonts.googleapis.com/css2?family=DynaPuff&family=Marck+Script&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap', array(), null );
+        wp_enqueue_style( 'kazani-style', get_stylesheet_directory_uri() . '/css/kazani.css', array(), '1.3' ); // Zvýšena verze
         wp_enqueue_script( 'kazani-script', get_stylesheet_directory_uri() . '/js/kazani.js', array(), '1.1', true );
     }
 }
@@ -129,5 +130,3 @@ function handle_update_kazani_data() {
     exit;
 }
 add_action('admin_post_update_kazani_data', 'handle_update_kazani_data');
-
-// Původní funkce pro notifikace již není potřeba, byla odstraněna.

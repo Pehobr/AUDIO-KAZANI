@@ -18,19 +18,21 @@ body {
     transition: max-height 0.5s ease-in;
 }
 
-/* --- OPRAVA FONTŮ --- */
-/* Použití speciálního fontu pro VŠECHNA tlačítka s touto třídou */
+/* --- NASTAVENÍ FONTŮ --- */
+
+/* Nadpis tlačítek (původní font a kapitálky) */
 .accordion-toggle {
-    font-family: 'Marck Script', cursive;
-    font-size: 1.25rem; /* <-- TATO HODNOTA URČUJE VELIKOST */
-    text-transform: none;
+    font-family: 'DynaPuff', cursive;
+    font-size: 1rem; /* Zde můžete upravovat velikost písma na tlačítku */
+    text-transform: uppercase; /* Vráceno zobrazení velkými písmeny */
 }
 
-/* Použití speciálního fontu pro VŠECHNY odstavce v rozbalovacím obsahu */
+/* Text v rozbalovacím obsahu */
 .accordion-content p {
     font-family: 'Playfair Display', serif;
 }
-/* --- KONEC OPRAVY --- */
+
+/* --- KONEC NASTAVENÍ --- */
 
 
 /* Styly pro vlastní audio přehrávač */
