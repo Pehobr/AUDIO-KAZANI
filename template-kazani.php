@@ -3,7 +3,7 @@
  * Template Name: Kázání
  *
  * Šablona pro stránku s audio kázáními, která se otevírají v modálním okně.
- * Verze: 3.2 - Úprava responzivních velikostí nadpisu
+ * Verze: 3.4 - Robustní parsování CSV
  */
 
 get_header(); // Načte hlavičku šablony
@@ -21,7 +21,7 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
 <main id="primary" class="site-main">
     
     <!-- Hlavní nadpis stránky s responzivní velikostí textu -->
-    <h1 class="text-2xl md:text-3xl lg:text-4xl text-white text-center my-8" style="font-family: 'Marck Script', cursive;">
+    <h1 class="text-2xl md:text-3xl lg:text-4xl text-white text-center my-4" style="font-family: 'Marck Script', cursive;">
         Inspirace Božího slova
     </h1>
 
@@ -32,27 +32,45 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
         if ( empty($csv_data) ) {
             echo '<p class="col-span-full text-center text-white bg-orange-600 p-4 rounded-lg">Data o kázáních nebyla nalezena. Prosím, načtěte je v administraci webu v sekci "Kázání".</p>';
         } else {
-            // Převedeme CSV data na pole řádků
-            $rows = str_getcsv( $csv_data, "\n" ); 
+            // =================================================================
+            // OPRAVA ZDE: Implementace robustního parseru pro CSV data.
+            // Tento způsob správně zpracuje čárky a uvozovky uvnitř polí.
+            // =================================================================
             
-            // Z pole odstraníme první řádek (hlavičku)
-            array_shift($rows);
+            $all_rows = [];
+            // Vytvoříme dočasný soubor v paměti
+            $handle = fopen('php://memory', 'r+');
+            // Zapíšeme do něj naše CSV data
+            fwrite($handle, $csv_data);
+            // Vrátíme ukazatel na začátek souboru
+            rewind($handle);
+
+            // Přeskočíme první řádek (hlavičku)
+            fgetcsv($handle, 1000, ",");
+
+            // Projdeme všechny řádky souboru
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                // Přidáme řádek do pole pro pozdější zpracování
+                $all_rows[] = $data;
+            }
+            fclose($handle);
 
             // Obrátíme pořadí, aby novější byly první
-            $rows = array_reverse($rows);
+            $rows_reversed = array_reverse($all_rows);
 
             // Projdeme všechny řádky
-            foreach ( $rows as $row ) {
-                $data = str_getcsv( $row, "," );
+            foreach ( $rows_reversed as $data ) {
+                // Přeskočíme případné prázdné nebo nekompletní řádky
+                if (count($data) < 4) continue;
                 
                 $nazev_kazani = isset($data[0]) ? htmlspecialchars($data[0]) : 'Bez názvu';
                 $citace = isset($data[1]) ? htmlspecialchars($data[1]) : '';
                 $verse = isset($data[2]) ? htmlspecialchars($data[2]) : '';
                 $url_tag = isset($data[3]) ? htmlspecialchars($data[3]) : '';
 
-                if (empty($url_tag)) continue; // Přeskočíme prázdné řádky
+                if (empty(trim($url_tag))) continue; // Přeskočíme řádky bez URL tagu
 
-                $final_mp3_url = $base_mp3_url . $url_tag . '.mp3';
+                $final_mp3_url = $base_mp3_url . trim($url_tag) . '.mp3';
                 ?>
                 <!-- Tlačítko pro otevření modálního okna -->
                 <div class="w-full">
