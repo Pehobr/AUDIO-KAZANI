@@ -20,11 +20,11 @@ body {
 
 /* --- NASTAVENÍ FONTŮ --- */
 
-/* Nadpis tlačítek (původní font a kapitálky) */
+/* Nadpis tlačítek */
 .accordion-toggle {
-    font-family: 'DynaPuff', cursive;
-    font-size: 1rem; /* Zde můžete upravovat velikost písma na tlačítku */
-    text-transform: none; /* Vráceno zobrazení velkými písmeny */
+    font-family: 'Akaya Kanadaka', cursive;
+    font-size: 1.2rem; /* Můžete si upravit velikost */
+    text-transform: none; 
 }
 
 /* Text v rozbalovacím obsahu */
