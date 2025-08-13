@@ -6,33 +6,19 @@ body {
     font-family: 'Inter', sans-serif; /* Výchozí font */
 }
 
-/* Styly pro rozbalovací obsah (accordion) */
-.accordion-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-}
-
-.accordion-content.open {
-    max-height: 500px; /* Dostatečná výška pro obsah, lze upravit */
-    transition: max-height 0.5s ease-in;
-}
-
 /* --- NASTAVENÍ FONTŮ --- */
-
-/* Nadpis tlačítek */
-.accordion-toggle {
+/* Nadpis tlačítek - nyní použito pro text v tlačítku */
+.open-modal-btn span {
     font-family: 'Akaya Kanadaka', cursive;
-    font-size: 1.2rem; /* Můžete si upravit velikost */
+    font-size: 1.1rem; /* Mírně menší pro lepší zobrazení na tlačítku */
     text-transform: none; 
 }
 
-/* Text v rozbalovacím obsahu */
-.accordion-content p {
+/* Text v modálním okně */
+.modal-content-area p {
     font-family: 'Playfair Display', serif;
 }
-
-/* --- KONEC NASTAVENÍ --- */
+/* --- KONEC NASTAVENÍ FONTŮ --- */
 
 
 /* Styly pro vlastní audio přehrávač */
@@ -47,4 +33,56 @@ body {
 .audio-player-button-icon {
     width: 1.75rem; /* 28px */
     height: 1.75rem; /* 28px */
+}
+
+
+/* --- STYLY PRO MODÁLNÍ OKNO --- */
+
+/* Překryvná vrstva (pozadí) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Poloprůhledná černá */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Vysoký z-index, aby bylo okno nahoře */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Třída 'visible' způsobí zobrazení okna s fade-in efektem */
+.modal-overlay.visible {
+    opacity: 1;
+}
+
+/* Kontejner samotného modálního okna */
+.modal-container {
+    background-color: #f1eeea; /* Stejná barva jako původní accordion box */
+    padding: 1.5rem; /* Větší vnitřní odsazení */
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 600px; /* Maximální šířka okna */
+    transform: scale(0.95);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Efekt "přiblížení" při zobrazení */
+.modal-overlay.visible .modal-container {
+    transform: scale(1);
+}
+
+/* Skrytí modálního okna (pro JavaScript) */
+.modal-overlay.hidden {
+    display: none;
+}
+
+/* Oblast pro obsah, aby bylo možné scrollovat, pokud je obsah delší */
+.modal-content-area {
+    max-height: 70vh; /* Maximální výška obsahu */
+    overflow-y: auto; /* Povolit svislé posouvání, pokud je potřeba */
 }

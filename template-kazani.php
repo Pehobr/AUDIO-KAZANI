@@ -2,8 +2,8 @@
 /**
  * Template Name: Kázání
  *
- * Šablona pro stránku s audio kázáními načítanými z databáze WordPressu.
- * Verze: 2.1 - Sjednocená výška tlačítek
+ * Šablona pro stránku s audio kázáními, která se otevírají v modálním okně.
+ * Verze: 3.0 - Implementace modálního okna
  */
 
 get_header(); // Načte hlavičku šablony
@@ -25,15 +25,7 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
         Inspirace Božího slova
     </h1>
 
-    <!-- 
-        KONTEJNER PRO KÁZÁNÍ S RESPONZIVNÍ MŘÍŽKOU
-        - grid: Aktivuje CSS Grid layout.
-        - grid-cols-1: Výchozí zobrazení pro mobily (1 sloupec).
-        - md:grid-cols-3: Na tabletech a větších zařízeních (šířka >= 768px) se zobrazí 3 sloupce.
-        - lg:grid-cols-4: Na počítačích (šířka >= 1024px) se zobrazí 4 sloupce.
-        - gap-4: Mezera mezi jednotlivými tlačítky v mřížce.
-        - max-w-7xl: Zvětšena maximální šířka kontejneru pro lepší zobrazení více sloupců.
-    -->
+    <!-- Kontejner pro tlačítka kázání -->
     <div class="kazani-container w-full max-w-7xl mx-auto my-8 p-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <?php
         // Zkontrolujeme, zda jsou data k dispozici v databázi
@@ -43,13 +35,13 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
             // Převedeme CSV data na pole řádků
             $rows = str_getcsv( $csv_data, "\n" ); 
             
-            // Z pole odstraníme první řádek (hlavičku), abychom s ním dále nepracovali.
+            // Z pole odstraníme první řádek (hlavičku)
             array_shift($rows);
 
-            // Obrátíme pořadí zbývajících řádků, aby novější byly první.
+            // Obrátíme pořadí, aby novější byly první
             $rows = array_reverse($rows);
 
-            // Projdeme všechny řádky v novém, obráceném pořadí.
+            // Projdeme všechny řádky
             foreach ( $rows as $row ) {
                 $data = str_getcsv( $row, "," );
                 
@@ -62,40 +54,59 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
 
                 $final_mp3_url = $base_mp3_url . $url_tag . '.mp3';
                 ?>
-                <!-- Jednotlivá položka kázání -->
-                <div class="w-full bg-[#f1eeea] rounded-xl shadow-lg overflow-hidden">
-                    <!-- ZMĚNA ZDE: Přidána třída "h-20" pro sjednocení výšky tlačítek. -->
-                    <button class="accordion-toggle w-full h-20 p-3 flex justify-between items-center bg-[#b7a99a] text-[#514332] font-normal rounded-xl hover:bg-[#9b8f84] focus:outline-none focus:ring-4 focus:ring-[#d3c7bb] ring-2 ring-white ring-inset">
-                        
-                        <span class="text-left leading-tight"><?php echo $nazev_kazani; ?></span>
-                        
-                        <svg class="arrow-icon w-6 h-6 transform transition-transform duration-300 flex-shrink-0 ml-2" fill="none" stroke="#514332" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
+                <!-- Tlačítko pro otevření modálního okna -->
+                <div class="w-full">
+                    <button 
+                        class="open-modal-btn w-full h-20 p-3 flex justify-center items-center text-center bg-[#b7a99a] text-[#514332] font-normal rounded-xl hover:bg-[#9b8f84] focus:outline-none focus:ring-4 focus:ring-[#d3c7bb] ring-2 ring-white ring-inset transition-colors duration-200"
+                        data-title="<?php echo $nazev_kazani; ?>"
+                        data-citace="<?php echo $citace; ?>"
+                        data-verse="<?php echo $verse; ?>"
+                        data-mp3="<?php echo $final_mp3_url; ?>"
+                    >
+                        <span class="leading-tight"><?php echo $nazev_kazani; ?></span>
                     </button>
-                    <div class="accordion-content">
-                        <div class="p-4">
-                            <p class="text-gray-600 mb-2 font-semibold"><?php echo $citace; ?></p>
-                            <p class="text-gray-800 leading-relaxed mb-4"><?php echo $verse; ?></p>
-                            <div class="audio-player-container">
-                                <audio class="audio-element" src="<?php echo $final_mp3_url; ?>" preload="none"></audio>
-                                <button class="play-pause-button bg-[#b7a99a] p-2 rounded-full text-[#514332] shadow-md hover:bg-[#9b8f84] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#d3c7bb]">
-                                    <svg class="play-icon audio-player-button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#514332"><path d="M8 5v14l11-7z" /></svg>
-                                    <svg class="pause-icon audio-player-button-icon hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#514332"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /></svg>
-                                </button>
-                                <div class="progress-bar-container flex-grow bg-[#b7a99a] rounded-full h-2 cursor-pointer">
-                                    <div class="progress-bar bg-[#514332] h-2 rounded-full transition-all duration-100" style="width: 0%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <?php
             }
         }
         ?>
     </div>
-</main><!-- #main -->
+</main>
+
+<!-- =============================================================== -->
+<!-- ===========   Struktura Modálního Okna (začátek)   ============ -->
+<!-- =============================================================== -->
+<div id="kazani-modal-overlay" class="modal-overlay hidden">
+    <div id="kazani-modal-container" class="modal-container">
+        <!-- Hlavička modálního okna s názvem a zavíracím tlačítkem -->
+        <div class="flex justify-between items-center pb-3 mb-4 border-b border-gray-300">
+            <h2 id="modal-title" class="text-xl font-bold text-[#514332]" style="font-family: 'Akaya Kanadaka', cursive;"></h2>
+            <button id="modal-close-btn" class="text-gray-500 hover:text-gray-800 text-3xl font-bold">&times;</button>
+        </div>
+
+        <!-- Obsah modálního okna -->
+        <div id="modal-content" class="modal-content-area">
+            <p id="modal-citace" class="text-gray-600 mb-2 font-semibold"></p>
+            <p id="modal-verse" class="text-gray-800 leading-relaxed mb-4"></p>
+            
+            <!-- Vlastní audio přehrávač -->
+            <div class="audio-player-container">
+                <audio id="modal-audio-element" src="" preload="none"></audio>
+                <button id="modal-play-pause-button" class="bg-[#b7a99a] p-2 rounded-full text-[#514332] shadow-md hover:bg-[#9b8f84] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#d3c7bb]">
+                    <svg id="modal-play-icon" class="play-icon audio-player-button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#514332"><path d="M8 5v14l11-7z" /></svg>
+                    <svg id="modal-pause-icon" class="pause-icon audio-player-button-icon hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#514332"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /></svg>
+                </button>
+                <div class="progress-bar-container flex-grow bg-[#b7a99a] rounded-full h-2 cursor-pointer">
+                    <div id="modal-progress-bar" class="bg-[#514332] h-2 rounded-full transition-all duration-100" style="width: 0%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- =============================================================== -->
+<!-- ============    Struktura Modálního Okna (konec)   ============ -->
+<!-- =============================================================== -->
+
 
 <?php
 get_footer(); // Načte patičku šablony
