@@ -26,7 +26,7 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
     </h1>
 
     <!-- Kontejner pro tlačítka kázání -->
-    <div class="kazani-container w-full max-w-7xl mx-auto my-8 p-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div class="kazani-container w-full max-w-7xl mx-auto my-1 p-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <?php
         // Zkontrolujeme, zda jsou data k dispozici v databázi
         if ( empty($csv_data) ) {
