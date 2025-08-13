@@ -49,7 +49,7 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
                 ?>
                 <div class="w-full bg-[#f1eeea] rounded-xl shadow-lg overflow-hidden">
                     <!-- Třída "text-lg" byla z tlačítka odstraněna -->
-                    <button class="accordion-toggle w-full p-4 flex justify-between items-center bg-[#b7a99a] text-[#514332] font-bold tracking-widest rounded-xl hover:bg-[#9b8f84] focus:outline-none focus:ring-4 focus:ring-[#d3c7bb] ring-2 ring-white ring-inset">
+                    <button class="accordion-toggle w-full p-3 flex justify-between items-center bg-[#b7a99a] text-[#514332] font-bold tracking-widest rounded-xl hover:bg-[#9b8f84] focus:outline-none focus:ring-4 focus:ring-[#d3c7bb] ring-2 ring-white ring-inset">
                         <span><?php echo $nazev_kazani; ?></span>
                         <svg class="arrow-icon w-6 h-6 transform transition-transform duration-300" fill="none" stroke="#514332" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
