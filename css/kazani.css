@@ -24,7 +24,7 @@ body {
 .accordion-toggle {
     font-family: 'DynaPuff', cursive;
     font-size: 1rem; /* Zde můžete upravovat velikost písma na tlačítku */
-    text-transform: uppercase; /* Vráceno zobrazení velkými písmeny */
+    text-transform: none; /* Vráceno zobrazení velkými písmeny */
 }
 
 /* Text v rozbalovacím obsahu */
