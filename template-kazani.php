@@ -3,7 +3,7 @@
  * Template Name: Kázání
  *
  * Šablona pro stránku s audio kázáními, která se otevírají v modálním okně.
- * Verze: 3.4 - Robustní parsování CSV
+ * Verze: 3.5 - Skrytí názvu v modálním okně
  */
 
 get_header(); // Načte hlavičku šablony
@@ -33,7 +33,7 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
             echo '<p class="col-span-full text-center text-white bg-orange-600 p-4 rounded-lg">Data o kázáních nebyla nalezena. Prosím, načtěte je v administraci webu v sekci "Kázání".</p>';
         } else {
             // =================================================================
-            // OPRAVA ZDE: Implementace robustního parseru pro CSV data.
+            // Robustní parser pro CSV data.
             // Tento způsob správně zpracuje čárky a uvozovky uvnitř polí.
             // =================================================================
             
@@ -96,9 +96,10 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
 <!-- =============================================================== -->
 <div id="kazani-modal-overlay" class="modal-overlay hidden">
     <div id="kazani-modal-container" class="modal-container">
-        <!-- Hlavička modálního okna s názvem a zavíracím tlačítkem -->
-        <div class="flex justify-between items-center pb-3 mb-4 border-b border-gray-300">
-            <h2 id="modal-title" class="text-xl font-bold text-[#514332]" style="font-family: 'Akaya Kanadaka', cursive;"></h2>
+        <!-- Hlavička modálního okna - pouze zavírací tlačítko -->
+        <div class="flex justify-end pb-3 mb-4 border-b border-gray-300">
+            <!-- Skrytý H2 element, aby se nerozbil JavaScript, který do něj vkládá název -->
+            <h2 id="modal-title" class="hidden"></h2>
             <button id="modal-close-btn" class="text-gray-500 hover:text-gray-800 text-3xl font-bold">&times;</button>
         </div>
 
