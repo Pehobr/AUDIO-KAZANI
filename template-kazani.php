@@ -18,6 +18,12 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
 ?>
 
 <main id="primary" class="site-main">
+    
+    <!-- Přidán nový nadpis -->
+    <h1 class="text-4xl text-white text-center my-8" style="font-family: 'Marck Script', cursive;">
+        Inspirace Božího slova
+    </h1>
+
     <div class="kazani-container w-full max-w-xl mx-auto my-8 space-y-4">
         <?php
         // Zkontrolujeme, zda jsou data k dispozici v databázi
