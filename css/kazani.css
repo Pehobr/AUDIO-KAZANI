@@ -21,7 +21,9 @@ body {
 /* --- OPRAVA FONTŮ --- */
 /* Použití speciálního fontu pro VŠECHNA tlačítka s touto třídou */
 .accordion-toggle {
-    font-family: 'DynaPuff', cursive;
+    font-family: 'Marck Script', cursive;
+    font-size: 1.25rem; /* <-- TATO HODNOTA URČUJE VELIKOST */
+    text-transform: none;
 }
 
 /* Použití speciálního fontu pro VŠECHNY odstavce v rozbalovacím obsahu */
