@@ -31,8 +31,8 @@ body {
 
 /* Zvětšení ikon přehrávače pro lepší ovladatelnost */
 .audio-player-button-icon {
-    width: 2rem; /* 28px */
-    height: 2rem; /* 28px */
+    width: 3rem; /* 28px */
+    height: 3rem; /* 28px */
 }
 
 
