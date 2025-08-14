@@ -3,7 +3,7 @@
  * Template Name: Kázání
  *
  * Šablona pro stránku s audio kázáními, která se otevírají v modálním okně.
- * Verze: 3.7 - Zmenšení tlačítka pro přehrávání
+ * Verze: 4.0 - Odstranění kruhového kontejneru u tlačítka play/pause.
  */
 
 get_header(); // Načte hlavičku šablony
@@ -96,23 +96,25 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/final/';
 <!-- =============================================================== -->
 <div id="kazani-modal-overlay" class="modal-overlay hidden">
     <div id="kazani-modal-container" class="modal-container">
-        <!-- Hlavička modálního okna - pouze zavírací tlačítko -->
-        <div class="flex justify-end pb-3 mb-4">
-            <!-- Skrytý H2 element, aby se nerozbil JavaScript, který do něj vkládá název -->
-            <h2 id="modal-title" class="hidden"></h2>
-            <button id="modal-close-btn" class="text-gray-500 hover:text-gray-800 text-3xl font-bold">&times;</button>
+        
+        <!-- Hlavička modálního okna: Citace vlevo, křížek vpravo -->
+        <div class="modal-header flex justify-between items-center pb-2 mb-3 border-b border-gray-300">
+            <p id="modal-citace" class="text-gray-700 font-semibold text-lg" style="font-family: 'Playfair Display', serif;"></p>
+            <button id="modal-close-btn" class="text-gray-500 hover:text-gray-800 text-3xl font-bold leading-none -mt-1">&times;</button>
         </div>
 
         <!-- Obsah modálního okna -->
         <div id="modal-content" class="modal-content-area">
-            <p id="modal-citace" class="text-gray-600 mb-2 font-semibold"></p>
+            <!-- Skrytý H2 element pro název kázání (pro zachování funkčnosti JS) -->
+            <h2 id="modal-title" class="hidden"></h2>
+            
             <p id="modal-verse" class="text-gray-800 leading-relaxed mb-4"></p>
             
             <!-- Vlastní audio přehrávač -->
             <div class="audio-player-container">
                 <audio id="modal-audio-element" src="" preload="none"></audio>
-                <!-- ZMĚNA: Zmenšeno odsazení tlačítka z 'p-2' na 'p-1.5' -->
-                <button id="modal-play-pause-button" class="bg-[#b7a99a] p-1.5 rounded-full text-[#514332] shadow-md hover:bg-[#9b8f84] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#d3c7bb]">
+                <!-- === ZMĚNA ZDE: Odstraněny třídy pro pozadí, padding, zaoblení a stín === -->
+                <button id="modal-play-pause-button" class="text-[#514332] transition-colors duration-200 focus:outline-none">
                     <svg id="modal-play-icon" class="play-icon audio-player-button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#514332"><path d="M8 5v14l11-7z" /></svg>
                     <svg id="modal-pause-icon" class="pause-icon audio-player-button-icon hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#514332"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /></svg>
                 </button>

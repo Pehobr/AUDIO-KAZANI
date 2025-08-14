@@ -31,8 +31,8 @@ body {
 
 /* Zvětšení ikon přehrávače pro lepší ovladatelnost */
 .audio-player-button-icon {
-    width: 1.75rem; /* 28px */
-    height: 1.75rem; /* 28px */
+    width: 2rem; /* 28px */
+    height: 2rem; /* 28px */
 }
 
 
@@ -64,7 +64,7 @@ body {
 /* Kontejner samotného modálního okna */
 .modal-container {
     background-color: #f1eeea; /* Stejná barva jako původní accordion box */
-    padding: 1rem; /* Větší vnitřní odsazení */
+    padding: 0.7rem; /* Větší vnitřní odsazení */
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     width: 90%;
