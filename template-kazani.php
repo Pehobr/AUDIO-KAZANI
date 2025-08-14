@@ -13,7 +13,7 @@ get_header(); // Načte hlavičku šablony
 $csv_data = get_option('kazani_data_csv');
 
 // Základní část URL adresy pro MP3 soubory
-$base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
+$base_mp3_url = 'https://audiokostel.cz/audio-kazani/final/';
 // --- KONEC NASTAVENÍ ---
 
 ?>
