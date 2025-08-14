@@ -3,7 +3,7 @@
  * Template Name: Kázání
  *
  * Šablona pro stránku s audio kázáními, která se otevírají v modálním okně.
- * Verze: 3.6 - Odstranění vodorovné linky v modálním okně
+ * Verze: 3.7 - Zmenšení tlačítka pro přehrávání
  */
 
 get_header(); // Načte hlavičku šablony
@@ -97,8 +97,7 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
 <div id="kazani-modal-overlay" class="modal-overlay hidden">
     <div id="kazani-modal-container" class="modal-container">
         <!-- Hlavička modálního okna - pouze zavírací tlačítko -->
-        <!-- ZMĚNA: Odstraněny třídy 'border-b' a 'border-gray-300' pro zrušení linky -->
-        <div class="flex justify-end pb-1 mb-0">
+        <div class="flex justify-end pb-3 mb-4">
             <!-- Skrytý H2 element, aby se nerozbil JavaScript, který do něj vkládá název -->
             <h2 id="modal-title" class="hidden"></h2>
             <button id="modal-close-btn" class="text-gray-500 hover:text-gray-800 text-3xl font-bold">&times;</button>
@@ -112,7 +111,8 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/';
             <!-- Vlastní audio přehrávač -->
             <div class="audio-player-container">
                 <audio id="modal-audio-element" src="" preload="none"></audio>
-                <button id="modal-play-pause-button" class="bg-[#b7a99a] p-2 rounded-full text-[#514332] shadow-md hover:bg-[#9b8f84] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#d3c7bb]">
+                <!-- ZMĚNA: Zmenšeno odsazení tlačítka z 'p-2' na 'p-1.5' -->
+                <button id="modal-play-pause-button" class="bg-[#b7a99a] p-1.5 rounded-full text-[#514332] shadow-md hover:bg-[#9b8f84] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#d3c7bb]">
                     <svg id="modal-play-icon" class="play-icon audio-player-button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#514332"><path d="M8 5v14l11-7z" /></svg>
                     <svg id="modal-pause-icon" class="pause-icon audio-player-button-icon hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#514332"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /></svg>
                 </button>
