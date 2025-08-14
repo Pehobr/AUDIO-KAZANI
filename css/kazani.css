@@ -48,7 +48,9 @@ body {
     background-color: rgba(0, 0, 0, 0.6); /* Poloprůhledná černá */
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* --- ZMĚNA: Zarovnání modálního okna nahoru --- */
+    align-items: flex-start; /* Původně bylo 'center', nyní zarovnává na začátek (nahoru) */
+    padding-top: 10vh;       /* Přidáno odsazení shora (10% výšky prohlížeče) */
     z-index: 1000; /* Vysoký z-index, aby bylo okno nahoře */
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
@@ -62,7 +64,7 @@ body {
 /* Kontejner samotného modálního okna */
 .modal-container {
     background-color: #f1eeea; /* Stejná barva jako původní accordion box */
-    padding: 1.5rem; /* Větší vnitřní odsazení */
+    padding: 1rem; /* Větší vnitřní odsazení */
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     width: 90%;
