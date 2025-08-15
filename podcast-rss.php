@@ -6,7 +6,7 @@
  * a vygeneruje z nich validní RSS 2.0 feed s iTunes-specifickými tagy
  * pro kompatibilitu s podcastovými aplikacemi.
  *
- * @version 1.1
+ * @version 1.2
  */
 
 // Načtení WordPress prostředí. Cesta musí být správně nastavena.
@@ -18,7 +18,7 @@ require_once( realpath( dirname( __FILE__ ) . '/../../../wp-load.php' ) );
 // Název vašeho podcastu
 $podcast_title = 'Inspirace Božího slova'; 
 // Popis vašeho podcastu
-$podcast_description = 'AI zpracování kázání  kostela sv. Alžběty Durynské ve Vnorovech.'; 
+$podcast_description = 'AI zpracování kázání  kostela sv. Alžběty Durynské ve Vnorovech.'; 
 // URL adresa webu, kde jsou kázání dostupná
 $podcast_link = get_site_url(); 
 // Jazyk podcastu (cs-CZ pro češtinu)
@@ -120,7 +120,7 @@ if ( !empty($csv_data) ) {
         $date_obj = DateTime::createFromFormat('d.m.Y', $datum_text);
         $pub_date = ($date_obj) ? $date_obj->format(DateTime::RFC2822) : date(DateTime::RFC2822);
 
-        // Vytvoření popisu epizody
+        // Vytvoření popisu epizody pro standardní <description> tag
         $item_description = $citace . "\n\n" . $verse;
 ?>
     <item>
@@ -132,7 +132,8 @@ if ( !empty($csv_data) ) {
         
         <!-- iTunes specifické tagy pro epizodu -->
         <itunes:author><?php echo htmlspecialchars($podcast_author); ?></itunes:author>
-        <itunes:summary><![CDATA[<?php echo htmlspecialchars($nazev_kazani); ?>]]></itunes:summary>
+        <!-- ZMĚNA ZDE: Do souhrnu se nyní vkládají verše místo názvu kázání -->
+        <itunes:summary><![CDATA[<?php echo $verse; ?>]]></itunes:summary>
         <itunes:explicit><?php echo $podcast_explicit; ?></itunes:explicit>
     </item>
 <?php
