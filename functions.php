@@ -100,6 +100,11 @@ function kazani_settings_page_html() {
         } else {
             echo '<p><i>Data ještě nebyla nikdy načtena. Klikněte na tlačítko pro první načtení.</i></p>';
         }
+        
+        // Zobrazení odkazu na RSS feed
+        echo '<h3>Váš odkaz na RSS feed podcastu:</h3>';
+        echo '<p>Tento odkaz vložte do podcastových aplikací (Spotify, Apple Podcasts atd.):</p>';
+        echo '<strong><a href="' . esc_url(get_site_url(null, 'podcast')) . '" target="_blank">' . esc_url(get_site_url(null, 'podcast')) . '</a></strong>';
         ?>
     </div>
     <?php
@@ -135,3 +140,47 @@ function handle_update_kazani_data() {
     exit;
 }
 add_action('admin_post_update_kazani_data', 'handle_update_kazani_data');
+
+
+// --- PŘIDÁNO: KÓD PRO RSS FEED PODCASTU ---
+
+/**
+ * 1. Registrace přepisovacího pravidla pro hezkou URL.
+ * Díky tomu bude feed dostupný na adrese /podcast/
+ */
+function kazani_podcast_rewrite_rule() {
+    add_rewrite_rule('^podcast/?$', 'index.php?kazani_podcast_feed=1', 'top');
+}
+add_action('init', 'kazani_podcast_rewrite_rule');
+
+/**
+ * 2. Přidání query var, aby WordPress rozuměl našemu parametru.
+ */
+function kazani_podcast_query_vars($vars) {
+    $vars[] = 'kazani_podcast_feed';
+    return $vars;
+}
+add_filter('query_vars', 'kazani_podcast_query_vars');
+
+/**
+ * 3. Načtení souboru s feedem, pokud je náš parametr v URL.
+ */
+function kazani_podcast_template_redirect() {
+    if (get_query_var('kazani_podcast_feed')) {
+        $feed_template = get_stylesheet_directory() . '/podcast-rss.php';
+        if (file_exists($feed_template)) {
+            include $feed_template;
+            exit;
+        }
+    }
+}
+add_action('template_redirect', 'kazani_podcast_template_redirect');
+
+/**
+ * 4. Vyčistí (flush) přepisovací pravidla při aktivaci šablony.
+ * To je důležité, aby se nové pravidlo pro /podcast/ správně načetlo.
+ */
+function kazani_flush_rewrite_rules_on_activate() {
+    flush_rewrite_rules();
+}
+add_action('after_switch_theme', 'kazani_flush_rewrite_rules_on_activate');
