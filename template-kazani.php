@@ -3,7 +3,7 @@
  * Template Name: Kázání
  *
  * Šablona pro stránku s audio kázáními, která se otevírají v modálním okně.
- * Verze: 5.1 - Doplněna URL adresa pro ikonu PDF.
+ * Verze: 5.3 - Změna ikony podcastu.
  */
 
 get_header(); // Načte hlavičku šablony
@@ -17,18 +17,23 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/final/';
 
 <main id="primary" class="site-main">
     
-    <!-- === ZMĚNA ZDE: Kontejner pro nadpis a ikonu === -->
-    <!-- Používáme Flexbox pro zarovnání prvků na jeden řádek. -->
-    <!-- 'relative' nám umožňuje absolutně pozicovat ikonu uvnitř tohoto kontejneru. -->
+    <!-- === Kontejner pro nadpis a ikony === -->
     <div class="w-full max-w-7xl mx-auto flex justify-center items-center relative px-4 py-2">
         
+        <!-- Odkaz s ikonou na Podcast stránku -->
+        <a href="/kazani-podcast/" class="absolute left-4 text-white hover:text-gray-300 transition-colors" title="Přejít na stránku podcastu">
+            <!-- ZMĚNA ZDE: Nová SVG ikona mikrofonu -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+            </svg>
+        </a>
+
         <!-- Hlavní nadpis stránky -->
         <h1 class="text-2xl md:text-3xl lg:text-4xl text-white text-center" style="font-family: 'Marck Script', cursive;">
             Inspirace Božího slova
         </h1>
 
         <!-- Odkaz s ikonou na PDF stránku -->
-        <!-- 'absolute right-4' pozicuje ikonu vpravo s malým okrajem. -->
         <a href="/kazani-pdf/" class="absolute right-4 text-white hover:text-gray-300 transition-colors" title="Zobrazit kázání v PDF">
             <!-- Jednoduchá SVG ikona knihy -->
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -36,7 +41,7 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/final/';
             </svg>
         </a>
     </div>
-    <!-- === KONEC ZMĚNY === -->
+    <!-- === KONEC === -->
 
 
     <!-- Kontejner pro tlačítka kázání -->
