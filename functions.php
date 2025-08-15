@@ -31,10 +31,8 @@ function enqueue_kazani_assets() {
         // Načtení všech potřebných fontů
         wp_enqueue_style( 'google-fonts-kazani', 'https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Marck+Script&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap', array(), null );
         
-        // ZMĚNA ZDE: Zvýšena verze stylu na 2.0
         wp_enqueue_style( 'kazani-style', get_stylesheet_directory_uri() . '/css/kazani.css', array(), '2.0' );
         
-        // ZMĚNA ZDE: Zvýšena verze skriptu na 2.0
         wp_enqueue_script( 'kazani-script', get_stylesheet_directory_uri() . '/js/kazani.js', array(), '2.0', true );
     }
 }
@@ -42,7 +40,6 @@ add_action( 'wp_enqueue_scripts', 'enqueue_kazani_assets' );
 
 
 // --- NASTAVENÍ STRÁNKY V ADMINISTRACI PRO NAČÍTÁNÍ KÁZÁNÍ ---
-// Tato část zůstává beze změny
 
 /**
  * 1. Vytvoření menu v administraci WordPressu.
@@ -142,11 +139,10 @@ function handle_update_kazani_data() {
 add_action('admin_post_update_kazani_data', 'handle_update_kazani_data');
 
 
-// --- PŘIDÁNO: KÓD PRO RSS FEED PODCASTU ---
+// --- KÓD PRO RSS FEED PODCASTU ---
 
 /**
  * 1. Registrace přepisovacího pravidla pro hezkou URL.
- * Díky tomu bude feed dostupný na adrese /podcast/
  */
 function kazani_podcast_rewrite_rule() {
     add_rewrite_rule('^podcast/?$', 'index.php?kazani_podcast_feed=1', 'top');
@@ -178,9 +174,33 @@ add_action('template_redirect', 'kazani_podcast_template_redirect');
 
 /**
  * 4. Vyčistí (flush) přepisovací pravidla při aktivaci šablony.
- * To je důležité, aby se nové pravidlo pro /podcast/ správně načetlo.
  */
 function kazani_flush_rewrite_rules_on_activate() {
     flush_rewrite_rules();
 }
 add_action('after_switch_theme', 'kazani_flush_rewrite_rules_on_activate');
+
+
+// --- NOVĚ PŘIDÁNO: KÓD PRO STRÁNKU PODCASTU ---
+
+/**
+ * Načte skripty a styly pro šablonu stránky "Podcast".
+ */
+function enqueue_podcast_assets() {
+    // Načte se jen na stránce, která používá šablonu 'template-podcast.php'
+    if ( is_page_template( 'template-podcast.php' ) ) {
+        // Tailwind CSS (pokud již není načteno jinak)
+        wp_enqueue_script( 'tailwind-css', 'https://cdn.tailwindcss.com', array(), null, false );
+        
+        // Google Fonty (stejné jako u kázání)
+        wp_enqueue_style( 'google-fonts-podcast', 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap', array(), null );
+        
+        // Vlastní styly pro podcast
+        wp_enqueue_style( 'podcast-style', get_stylesheet_directory_uri() . '/css/podcast.css', array(), '1.0' );
+        
+        // Vlastní JavaScript pro přehrávač
+        wp_enqueue_script( 'podcast-script', get_stylesheet_directory_uri() . '/js/podcast.js', array(), '1.0', true );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'enqueue_podcast_assets' );
+

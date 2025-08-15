@@ -1,0 +1,87 @@
+/* Styly pro stránku template-podcast.php */
+
+.podcast-page-container {
+    background-color: #b7a99a; /* Nová barva pozadí stránky */
+}
+
+/* --- Hlavička podcastu --- */
+.podcast-header h1 {
+    color: #514332;
+}
+.podcast-header p {
+    color: #6a5a48;
+}
+
+/* --- Tlačítka --- */
+.subscribe-buttons .subscribe-btn.rss {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    background-color: #514332; /* Tmavší barva pro lepší kontrast */
+    border: 1px solid #f1eeea;
+}
+.subscribe-buttons .subscribe-btn.rss:hover {
+    transform: scale(1.05);
+    background-color: #6a5a48;
+}
+
+/* --- Karta epizody --- */
+.episode-card {
+    background-color: #f1eeea; /* Sjednocená barva s původním designem */
+    border-color: #d3c7bb;
+    transition: box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+.episode-card.is-playing {
+    border-color: #514332;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.episode-card h3 {
+    color: #514332;
+}
+.episode-card .text-sm {
+    color: #6a5a48;
+}
+
+/* Styl pro verše */
+.episode-summary {
+    font-family: 'Playfair Display', serif; /* Patkové písmo */
+    font-weight: normal; /* Obyčejný řez písma */
+    color: #6a5a48; /* Hnědá barva */
+    font-size: 0.95rem; /* Mírně větší pro lepší čitelnost */
+    line-height: 1.4;
+    margin-top: 2px; /* ZMĚNA ZDE: Zmenšení horního odsazení */
+}
+
+
+/* --- Přehrávač --- */
+.play-pause-btn {
+    background-color: #6a5a48; /* Změněno na středně hnědou */
+}
+.play-pause-btn:hover {
+    background-color: #514332; /* Ztmavení při najetí myší */
+}
+
+.player-controls {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, margin-top 0.3s ease-out;
+}
+.episode-card.is-playing .player-controls,
+.episode-card.is-paused .player-controls {
+    max-height: 100px;
+    margin-top: 0.75rem;
+}
+
+.progress-bar-wrapper {
+    background-color: #d3c7bb;
+}
+.progress-bar {
+    background-color: #514332;
+}
+.time-display span {
+    color: #6a5a48;
+}
