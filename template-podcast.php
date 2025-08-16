@@ -3,7 +3,7 @@
  * Template Name: Podcast
  *
  * Šablona pro stránku s přehrávačem podcast epizod.
- * @version 1.3
+ * @version 1.4 - Skrytí nadpisu na mobilních zařízeních
  */
 
 get_header();
@@ -22,21 +22,18 @@ $csv_data = get_option('kazani_data_csv');
 <main id="primary" class="site-main podcast-page-container py-8 md:py-12">
     <div class="w-full max-w-4xl mx-auto px-4">
 
-        <!-- === HLAVIČKA PODCASTU === -->
         <header class="podcast-header flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-6 mb-10">
             <img src="<?php echo esc_url($podcast_image_url); ?>" alt="Cover podcastu <?php echo esc_attr($podcast_title); ?>" class="w-32 h-32 md:w-40 md:h-40 rounded-lg shadow-lg object-cover">
             <div class="flex-1">
-                <h1 class="text-3xl md:text-4xl font-bold" style="font-family: 'Playfair Display', serif;"><?php echo esc_html($podcast_title); ?></h1>
+                <h1 class="hidden sm:block text-3xl md:text-4xl font-bold" style="font-family: 'Playfair Display', serif;"><?php echo esc_html($podcast_title); ?></h1>
                 <p class="mt-2 text-lg"><?php echo esc_html($podcast_description); ?></p>
                 
-                <!-- Tlačítko pro odběr -->
                 <div class="subscribe-buttons mt-4 flex justify-center sm:justify-start flex-wrap gap-3">
                     <a href="<?php echo esc_url(get_site_url(null, 'podcast')); ?>" target="_blank" class="subscribe-btn rss">RSS Feed</a>
                 </div>
             </div>
         </header>
 
-        <!-- === SEZNAM EPIZOD === -->
         <div class="episode-list space-y-4">
             <?php
             if ( !empty($csv_data) ) {
@@ -72,7 +69,6 @@ $csv_data = get_option('kazani_data_csv');
                     ?>
                     <article class="episode-card p-4 rounded-lg shadow-sm border" data-mp3-url="<?php echo esc_url($final_mp3_url); ?>">
                         <div class="flex items-center gap-4">
-                            <!-- Tlačítko Play/Pause -->
                             <button class="play-pause-btn flex-shrink-0 w-12 h-12 rounded-full text-white flex items-center justify-center transition-colors">
                                 <svg class="play-icon w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                                 <svg class="pause-icon w-6 h-6 hidden" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
@@ -80,7 +76,6 @@ $csv_data = get_option('kazani_data_csv');
                             <div class="flex-1">
                                 <p class="text-sm"><?php echo $datum_text; ?></p>
                                 <h3 class="font-semibold"><?php echo $nazev_kazani; ?></h3>
-                                <!-- PŘIDÁNO ZDE: Zobrazení veršů -->
                                 <p class="episode-summary mt-1"><?php echo $verse; ?></p>
                             </div>
                         </div>
