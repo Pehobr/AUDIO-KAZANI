@@ -86,8 +86,8 @@
 
 /* NOVÝ STYL: Sjednocení velikosti ikon */
 .mobile-bottom-nav .nav-item svg {
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
 }
 
 .mobile-bottom-nav .nav-item:hover {
