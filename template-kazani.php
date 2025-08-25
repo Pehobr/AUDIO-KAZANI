@@ -3,7 +3,7 @@
  * Template Name: Kázání
  *
  * Šablona pro stránku s audio kázáními, která se otevírají v modálním okně.
- * Verze: 5.5 - Integrace mobilní spodní lišty.
+ * Verze: 6.0 - Přidána funkce "Načíst další".
  */
 
 get_header(); // Načte hlavičku šablony
@@ -19,7 +19,6 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/final/';
     
     <div class="w-full max-w-7xl mx-auto flex justify-between items-center px-4 py-2">
         
-        <!-- PŘIDÁNA TŘÍDA "hide-on-mobile" -->
         <a href="/kazani-podcast/" class="text-white hover:text-gray-300 transition-colors hide-on-mobile" title="Přejít na stránku podcastu">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
@@ -30,7 +29,6 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/final/';
             Inspirace Božího slova
         </h1>
 
-        <!-- PŘIDÁNA TŘÍDA "hide-on-mobile" -->
         <a href="/kazani-pdf/" class="text-white hover:text-gray-300 transition-colors hide-on-mobile" title="Zobrazit kázání v PDF">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -39,21 +37,14 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/final/';
     </div>
     <div class="kazani-container w-full max-w-7xl mx-auto my-1 p-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <?php
-        // Zkontrolujeme, zda jsou data k dispozici v databázi
         if ( empty($csv_data) ) {
             echo '<p class="col-span-full text-center text-white bg-orange-600 p-4 rounded-lg">Data o kázáních nebyla nalezena. Prosím, načtěte je v administraci webu v sekci "Kázání".</p>';
         } else {
-            // =================================================================
-            // Robustní parser pro CSV data.
-            // =================================================================
-            
             $all_rows = [];
             $handle = fopen('php://memory', 'r+');
             fwrite($handle, $csv_data);
             rewind($handle);
-
-            // Přeskočíme první řádek (hlavičku)
-            fgetcsv($handle, 1000, ",");
+            fgetcsv($handle, 1000, ","); // Přeskočení hlavičky
 
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                 $all_rows[] = $data;
@@ -63,18 +54,15 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/final/';
             $rows_reversed = array_reverse($all_rows);
 
             foreach ( $rows_reversed as $data ) {
-                if (count($data) < 4) continue;
+                if (count($data) < 4 || empty(trim($data[3]))) continue;
                 
-                $nazev_kazani = isset($data[0]) ? htmlspecialchars($data[0]) : 'Bez názvu';
-                $citace = isset($data[1]) ? htmlspecialchars($data[1]) : '';
-                $verse = isset($data[2]) ? htmlspecialchars($data[2]) : '';
-                $url_tag = isset($data[3]) ? htmlspecialchars($data[3]) : '';
-
-                if (empty(trim($url_tag))) continue;
-
+                $nazev_kazani = htmlspecialchars($data[0]);
+                $citace = htmlspecialchars($data[1]);
+                $verse = htmlspecialchars($data[2]);
+                $url_tag = htmlspecialchars($data[3]);
                 $final_mp3_url = $base_mp3_url . trim($url_tag) . '.mp3';
                 ?>
-                <div class="w-full">
+                <div class="w-full kazani-item">
                     <button 
                         class="open-modal-btn w-full h-20 p-3 flex justify-center items-center text-center bg-[#b7a99a] text-[#514332] font-normal rounded-xl hover:bg-[#9b8f84] focus:outline-none focus:ring-4 focus:ring-[#d3c7bb] ring-2 ring-white ring-inset transition-colors duration-200"
                         data-title="<?php echo $nazev_kazani; ?>"
@@ -90,6 +78,14 @@ $base_mp3_url = 'https://audiokostel.cz/audio-kazani/final/';
         }
         ?>
     </div>
+
+    <!-- Tlačítko pro načtení dalších kázání -->
+    <div class="w-full flex justify-center mt-4 mb-8">
+        <button id="load-more-btn" class="bg-[#b7a99a] text-[#514332] font-bold py-3 px-8 rounded-xl hover:bg-[#9b8f84] focus:outline-none focus:ring-4 focus:ring-[#d3c7bb] ring-2 ring-white ring-inset transition-colors duration-200 shadow-lg">
+            Načíst starší kázání
+        </button>
+    </div>
+
 </main>
 
 <div id="kazani-modal-overlay" class="modal-overlay hidden">
