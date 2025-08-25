@@ -88,3 +88,11 @@ body {
     max-height: 70vh; /* Maximální výška obsahu */
     overflow-y: auto; /* Povolit svislé posouvání, pokud je potřeba */
 }
+
+/* --- MOBILNÍ ZOBRAZENÍ --- */
+@media (max-width: 768px) {
+    /* Skryje ikony pro podcast a PDF v hlavičce na mobilu */
+    .hide-on-mobile {
+        display: none !important;
+    }
+}
